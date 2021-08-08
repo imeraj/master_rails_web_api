@@ -13,7 +13,7 @@ RSpec.describe Book, type: :model do
   it { should validate_length_of(:isbn_10).is_equal_to(10) }
   it { should validate_length_of(:isbn_13).is_equal_to(13) }
 
-  it { should belong_to(:publisher) }
+  it { should belong_to(:publisher).optional }
   it { should belong_to(:author) }
 
   it 'has a valid factory' do
