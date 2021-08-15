@@ -90,6 +90,18 @@ GEM
     hashdiff (1.0.0)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
+    kaminari (1.1.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.1.1)
+      kaminari-activerecord (= 1.1.1)
+      kaminari-core (= 1.1.1)
+    kaminari-actionview (1.1.1)
+      actionview
+      kaminari-core (= 1.1.1)
+    kaminari-activerecord (1.1.1)
+      activerecord
+      kaminari-core (= 1.1.1)
+    kaminari-core (1.1.1)
     listen (3.6.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -206,6 +218,7 @@ DEPENDENCIES
   carrierwave-base64
   database_cleaner-active_record
   factory_bot_rails
+  kaminari
   listen (~> 3.2)
   mimemagic
   pg (>= 0.18, < 2.0)
