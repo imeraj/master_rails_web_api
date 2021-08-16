@@ -1,9 +1,7 @@
-module Helpers
-  def json_body
-    JSON.parse(response.body)
+module Support
+  module Helpers
+    def json_body
+      JSON.parse(response.body)
+    end
   end
-end
-
-RSpec.configure do |c|
-  c.include Helpers
 end

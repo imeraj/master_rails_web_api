@@ -56,7 +56,5 @@ RSpec.describe Paginator do
         expect(links.last).to eq '<url?page=1&per=2>; rel="prev"'
       end
     end
-
-
   end
 end
