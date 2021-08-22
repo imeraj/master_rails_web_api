@@ -6,7 +6,7 @@ RSpec.describe BooksController, type: :controller do
   let(:agile_web_dev) { create(:agile_web_development) }
   let(:books) { [ruby_microscope, rails_tutorial, agile_web_dev] }
 
-  describe 'GET /api/books' do
+  describe 'GET index' do
     before { books }
 
     context 'default behavior' do
@@ -190,5 +190,120 @@ RSpec.describe BooksController, type: :controller do
       end
     end
 
+    describe 'GET show' do
+
+      context 'with existing resource' do
+        before { get :show, params: { id: rails_tutorial.id } }
+
+        it 'gets HTTP status 200' do
+          expect(response.status).to eq 200
+        end
+
+        it 'receives the "rails_tutorial" book as JSON' do
+          expected = { data: BookPresenter.new(rails_tutorial, {}).fields.embeds }
+          expect(response.body).to eq(expected.to_json)
+        end
+      end
+
+      context 'with nonexistent resource' do
+        it 'gets HTTP status 404' do
+          get :show, params: { id: 12345 }
+          expect(response.status).to eq 404
+        end
+      end
+    end
+
+    describe 'POST /api/books' do
+      let(:author) { create(:michael_hartl) }
+      before do
+        Book.delete_all
+        @request.host = 'www.example.com'
+        post :create, params: { data: params }
+      end
+
+      context 'with valid parameters' do
+        let(:params) do
+          attributes_for(:ruby_on_rails_tutorial, author_id: author.id)
+        end
+
+        it 'gets HTTP status 201' do
+          expect(response.status).to eq 201
+        end
+
+        it 'receives the newly created resource' do
+          expect(json_body['data']['title']).to eq 'Ruby on Rails Tutorial'.upcase
+        end
+
+        it 'adds a record in the database' do
+          expect(Book.count).to eq 1
+        end
+
+        it 'gets the new resource location in the Location header' do
+          expect(response.headers['Location']).to eq(
+                                                    "http://www.example.com/api/books/#{Book.first.id}"
+                                                  )
+        end
+      end
+    end
+
+    describe 'PATCH update' do
+      before { patch :update, params: { id: rails_tutorial.id, data: params } }
+
+      context 'with valid parameters' do
+        let(:params) { { title: 'The Ruby on Rails Tutorial' } }
+
+        it 'gets HTTP status 200' do
+          expect(response.status).to eq 200
+        end
+
+        it 'receives the updated resource' do
+          expect(json_body['data']['title']).to eq(
+                                                  'The Ruby on Rails Tutorial'.upcase
+                                                )
+        end
+        it 'updates the record in the database' do
+          expect(Book.find(rails_tutorial.id).title).to eq 'The Ruby on Rails Tutorial'
+        end
+      end
+
+      context 'with invalid parameters' do
+        let(:params) { { title: '' } }
+
+        it 'gets HTTP status 422' do
+          expect(response.status).to eq 422
+        end
+
+        it 'receives the error details' do
+          expect(json_body['error']['invalid_params']).to eq(
+                                                            { 'title'=>["can't be blank"] }
+                                                          )
+        end
+
+        it 'does not add a record in the database' do
+          expect(Book.find(rails_tutorial.id).title).to eq 'Ruby on Rails Tutorial'
+        end
+      end
+    end
+
+    describe 'DELETE destroy' do
+      context 'with existing resource' do
+        before { delete :destroy, params: { id: rails_tutorial.id} }
+
+        it 'gets HTTP status 204' do
+          expect(response.status).to eq 204
+        end
+
+        it 'deletes the book from the database' do
+          expect(Book.count).to eq 2
+        end
+      end
+
+      context 'with nonexistent resource' do
+        it 'gets HTTP status 404' do
+          delete :destroy, params: { id: 12345 }
+          expect(response.status).to eq 404
+        end
+      end
+    end
   end
 end
