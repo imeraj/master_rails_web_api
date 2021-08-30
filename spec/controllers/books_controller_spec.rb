@@ -7,7 +7,14 @@ RSpec.describe BooksController, type: :controller do
   let(:books) { [ruby_microscope, rails_tutorial, agile_web_dev] }
 
   describe 'GET index' do
-    before { books }
+    before do
+      books
+
+      allow_any_instance_of(BooksController).to(
+        receive(:validate_auth_scheme).and_return(true))
+      allow_any_instance_of(BooksController).to(
+        receive(:authenticate_client).and_return(true))
+    end
 
     context 'default behavior' do
       before { get 'index' }
