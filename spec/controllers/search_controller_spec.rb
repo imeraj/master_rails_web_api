@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SearchController, type: :controller do
+  include_context 'Skip Auth'
 
   let(:ruby_microscope) { create(:ruby_microscope) }
   let(:rails_tutorial) { create(:ruby_on_rails_tutorial) }
@@ -13,11 +14,6 @@ RSpec.describe SearchController, type: :controller do
       PgSearch::Multisearch.rebuild(Book)
       PgSearch::Multisearch.rebuild(Author)
       PgSearch::Multisearch.rebuild(Publisher)
-
-      allow_any_instance_of(SearchController).to(
-        receive(:validate_auth_scheme).and_return(true))
-      allow_any_instance_of(SearchController).to(
-        receive(:authenticate_client).and_return(true))
     end
 
     context 'with text = ruby' do

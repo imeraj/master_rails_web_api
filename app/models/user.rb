@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
+  has_many :access_tokens
+
   include BCrypt
 
   before_validation :generate_confirmation_token, on: :create
