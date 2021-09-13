@@ -28,6 +28,7 @@ gem 'carrierwave-base64'
 gem 'kaminari'
 gem 'pg_search'
 gem 'bcrypt'
+gem 'pundit'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
