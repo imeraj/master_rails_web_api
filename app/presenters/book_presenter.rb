@@ -15,4 +15,8 @@ class BookPresenter < BasePresenter
   def title
     @object.title.upcase
   end
+
+  def root_url
+    "localhost:3000"
+  end
 end
