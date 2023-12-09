@@ -48,7 +48,12 @@ class User < ApplicationRecord
   private
 
   def generate_confirmation_token
-    self.confirmation_token = SecureRandom.hex
+    confirmation_token = loop do
+      confirmation_token = SecureRandom.hex
+      break confirmation_token unless User.exists?(confirmation_token: confirmation_token)
+    end
+
+    self.confirmation_token = confirmation_token
   end
 
   def downcase_email
