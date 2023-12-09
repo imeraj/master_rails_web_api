@@ -15,6 +15,11 @@ class ApiKey < ApplicationRecord
   private
 
   def generate_key
-    self.key = SecureRandom.hex
+    key = loop do
+      key = SecureRandom.hex(32)
+      break key unless ApiKey.exists?(key: key)
+    end
+
+    self.key = key
   end
 end
