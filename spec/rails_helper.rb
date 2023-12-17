@@ -85,6 +85,11 @@ RSpec.configure do |config|
     end
   end
 
+  VCR.configure do |config|
+    config.cassette_library_dir ='spec/fixtures/vcr_cassettes'
+    config.hook_into :webmock
+  end
+
   # Configure Shoulda-Matchers
   Shoulda::Matchers.configure do |config|
     config.integrate do |with|

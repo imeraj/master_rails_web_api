@@ -7,6 +7,7 @@ class CreatePurchases < ActiveRecord::Migration[7.1]
       t.string :idempotency_key
       t.integer :status
       t.string :charge_id
+      t.string :token
       t.text :error
 
       t.timestamps

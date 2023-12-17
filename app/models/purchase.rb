@@ -12,7 +12,7 @@ class Purchase < ApplicationRecord
   validates :price_cents, presence: true, numericality: { greater_than_or: 1}
   validates :user, presence: true
   validates :book, presence: true
-  validates :idempotency_key,  presence: true, uniqueness: true
+  validates :token, presence: true
 
   def confirm!(charge_id)
     confirmed!

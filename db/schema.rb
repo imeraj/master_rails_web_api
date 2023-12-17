@@ -86,6 +86,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_17_114516) do
     t.string "idempotency_key"
     t.integer "status"
     t.string "charge_id"
+    t.string "token"
     t.text "error"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

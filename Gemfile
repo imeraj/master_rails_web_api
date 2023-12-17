@@ -30,6 +30,7 @@ gem 'pg_search'
 gem 'bcrypt'
 gem 'pundit'
 gem 'money-rails'
+gem 'stripe'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
@@ -39,6 +40,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'factory_bot_rails'
+  gem "vcr"
 end
 
 group :development do
