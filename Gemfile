@@ -29,6 +29,7 @@ gem 'kaminari'
 gem 'pg_search'
 gem 'bcrypt'
 gem 'pundit'
+gem 'money-rails'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
