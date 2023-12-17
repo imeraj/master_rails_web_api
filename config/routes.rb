@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     resources :password_resets, only: [:show, :create, :update],
               param: :reset_token
 
+    resources :purchases, only: [:index, :show, :create]
+
     resources :access_tokens, only: :create do
       delete '/', action: :destroy, on: :collection
     end
