@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   scope :api do
-    resources :books
+    resources :books, except: :put do
+      get :download, to: "downloads#show"
+    end
+
     resources :authors
     resources :publishers
     resources :users, except: :put
